@@ -12,7 +12,7 @@ import java.util.*;
  * Created by tim on 2021/1/18
  **/
 @RestController
-public class LoginController {
+public class LoginController extends AbstractController{
 
     @Autowired
     private UserService userService;
@@ -40,7 +40,10 @@ public class LoginController {
         String userName = jsonObject.getString("email");
         String passWd = jsonObject.getString("password");
         UserLogin userLogin = userService.queryRoleByUserName(userName, passWd);
-        role.setRole(Arrays.asList(userLogin.getRole()));
+        if(userLogin!=null){
+            role.setRole(Arrays.asList(userLogin.getRole()));
+        }
+
 
         System.out.println(userLogin.getRole());
         return JSONObject.toJSONString(role);
@@ -70,6 +73,30 @@ public class LoginController {
 //        return JSONObject.toJSONString(role);
     }
 
+    @PostMapping("/user/register")//将注册信息比对后，写入user_login表
+    public String register(@RequestBody()String body){
+        try {
+            System.out.println(" register  body::"+body);
+
+            JSONObject jsonObject2 = JSONObject.parseObject(body);
+            String userName = jsonObject2.getString("email");
+            String passWd = jsonObject2.getString("password");
+            String role= jsonObject2.getString("role");
+            System.out.println(role);
+            UserLogin userLogin = userService.queryByUserName(userName);
+            if(userLogin!=null){
+                return fail("该用户已存在");
+            }else{
+                userService.insertUserLogin(userName, passWd,role);
+            }
+            return success("注册成功");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return fail("添加失败");
+
+
+    }
 
 
     @GetMapping("/test")

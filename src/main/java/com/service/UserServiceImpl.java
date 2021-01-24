@@ -11,8 +11,8 @@ public class UserServiceImpl implements UserService{
     private UserLoginMapper userLoginMapper;
 
     @Override
-    public void insertUserLogin(String userName, String passWd) {
-        userLoginMapper.insertUser(userName,passWd);
+    public void insertUserLogin(String userName, String passWd,String role) {
+        userLoginMapper.insertUser(userName,passWd,role);
     }
 
     @Override
@@ -25,6 +25,12 @@ public class UserServiceImpl implements UserService{
 
         UserLogin userLogin = userLoginMapper.queryById(userId);
     return  userLogin;
+    }
+
+    @Override
+    public UserLogin queryByUserName(String userName){
+        UserLogin userLogin =userLoginMapper.queryByUserName(userName);
+        return  userLogin;
     }
 
     @Override

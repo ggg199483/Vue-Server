@@ -17,10 +17,16 @@
         where user_name = #{userName} AND pass_wd=#{passWord}
     </select>
 
+    <select id="queryByUserName" resultType="com.entity.UserLogin">
+        select id id, user_name userName, pass_wd passWord,`role` role
+        from user_login
+        where user_name = #{userName}
+    </select>
+
     <!--    insert  添加    update 修改  delete  删除   返回值int >0成功  -->
     <insert id="insertUser">
-        insert into user_login(user_name, pass_wd)
-        values (#{userName}, #{passWord})
+        insert into user_login(user_name, pass_wd,`role`)
+        values (#{userName}, #{passWord}, #{role})
     </insert>
 
     <update id="updatepassWd">

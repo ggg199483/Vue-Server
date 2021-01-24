@@ -8,7 +8,9 @@ import org.apache.ibatis.annotations.Param;
 public interface UserLoginMapper {
     UserLogin queryById(@Param("id") Integer id);
 
-    Integer insertUser(@Param("userName") String userName,@Param("passWord") String passWord);
+    UserLogin queryByUserName(@Param("userName")String userName);
+
+    Integer insertUser(@Param("userName") String userName,@Param("passWord") String passWord,@Param("role") String role);
 
     String queryUserNameByUserId(@Param("userIdss") Integer userId);
     
@@ -16,4 +18,5 @@ public interface UserLoginMapper {
     void updatepassWd(@Param("userName") String userName,@Param("passWord") String passWord);
 
     UserLogin queryRole(String userName, @Param("passWord")String passWd);
+
 }
