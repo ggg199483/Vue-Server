@@ -19,6 +19,8 @@ public class ResponseEntity implements Serializable {
     public ResponseEntity() {
     }
 
+
+
     public Object getData() {
         return data;
     }

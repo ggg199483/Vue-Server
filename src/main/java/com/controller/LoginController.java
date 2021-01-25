@@ -42,10 +42,11 @@ public class LoginController extends AbstractController{
         UserLogin userLogin = userService.queryRoleByUserName(userName, passWd);
         if(userLogin!=null){
             role.setRole(Arrays.asList(userLogin.getRole()));
+            System.out.println(userLogin.getRole());
         }
 
 
-        System.out.println(userLogin.getRole());
+
         return JSONObject.toJSONString(role);
     }
 
@@ -75,7 +76,6 @@ public class LoginController extends AbstractController{
 
     @PostMapping("/user/register")//将注册信息比对后，写入user_login表
     public String register(@RequestBody()String body){
-        try {
             System.out.println(" register  body::"+body);
 
             JSONObject jsonObject2 = JSONObject.parseObject(body);
@@ -90,10 +90,6 @@ public class LoginController extends AbstractController{
                 userService.insertUserLogin(userName, passWd,role);
             }
             return success("注册成功");
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return fail("添加失败");
 
 
     }
