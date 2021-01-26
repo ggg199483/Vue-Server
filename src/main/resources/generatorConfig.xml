@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!--mybatis生成工具的帮助文档可以看：-->
+    <!--英文：http://www.mybatis.org/generator/usage/mysql.html-->
+    <!--中文：http://www.mybatis.tk/-->
+    <!--中文：http://mbg.cndocs.tk/-->
+    <properties resource="application.properties"  />
+
+    <context id="context" targetRuntime="MyBatis3Simple"  defaultModelType="flat" >
+        <!--设置编码格式-->
+        <property name="javaFileEncoding" value="UTF-8"/>
+
+        <commentGenerator >
+            <property name="suppressDate" value="true"/>
+            <property name="suppressAllComments" value="true"/>
+            <property name="enableInsert" value="false" />
+            <property name="enableSelectByPrimaryKey" value="false" />
+            <property name="enableSelectByExample" value="false" />
+            <property name="enableUpdateByPrimaryKey" value="false" />
+            <property name="enableDeleteByPrimaryKey" value="false" />
+            <property name="enableDeleteByExample" value="false" />
+            <property name="enableCountByExample" value="false" />
+
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/speech_platform"
+                        userId="root"
+                        password="27893524Gt10">
+        </jdbcConnection>
+
+        <!--<jdbcConnection driverClass="com.mysql.jdbc.Driver"-->
+                        <!--connectionURL="jdbc:mysql://10.10.29.71:3306/speech_platform"-->
+                        <!--userId="root"-->
+                        <!--password="ubtrdtest@123#">-->
+        <!--</jdbcConnection>-->
+
+        <!--要生成的 domain 模块位置-->
+        <javaModelGenerator targetPackage="com.entity" targetProject="src/main/java">
+            <!--<property name="enableSubPackages" value="true"/>-->
+            <!--<property name="trimStrings" value="true"/>-->
+            <!--<property name="comments" value="true"/>-->
+        </javaModelGenerator>
+        <!--要生成的 Mapper.xml 文件位置-->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src/main/resources/">
+        </sqlMapGenerator>
+        <!--要生成的 Mapper 接口类-->
+        <javaClientGenerator targetPackage="com.mapper" targetProject="src/main/java" type="XMLMAPPER">
+
+        </javaClientGenerator>
+
+
+
+
+        <table tableName="news_info" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+            <generatedKey column="id" sqlStatement="mysql" identity="true"/>
+            <columnOverride column="content" javaType="java.lang.String" />
+
+        </table>
+    </context>
+
+</generatorConfiguration>
