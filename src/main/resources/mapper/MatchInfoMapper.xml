@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.MatchInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.MatchInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="college" property="college" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="max_count" property="maxCount" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="teacher_id" property="teacherId" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from match_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.MatchInfo" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into match_info (title, college, type,
+      max_count, status, create_date,
+      teacher_id)
+    values (#{title,jdbcType=VARCHAR}, #{college,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR},
+      #{maxCount,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP},
+      #{teacherId,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.entity.MatchInfo" >
+    update match_info
+    set title = #{title,jdbcType=VARCHAR},
+      college = #{college,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      max_count = #{maxCount,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      teacher_id = #{teacherId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, title, college, type, max_count, status, create_date, teacher_id
+    from match_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, title, college, type, max_count, status, create_date, teacher_id
+    from match_info
+  </select>
+
+ <select id="selectMatchInfoDtoList" resultType="com.dto.MatchInfoDto">
+   SELECT mi.id, mi.title, `type`, mi.max_count maxCount, create_date createDate, start_date startDate, end_date endDate, ul.user_name teacherName,ci.college,max_count maxCount FROM match_info AS  mi
+   LEFT JOIN user_login ul ON mi.teacher_id = ul.id
+   LEFT JOIN college_info ci ON mi.college = ci.id
+   WHERE mi.status = 1
+ </select>
+
+    <insert id="insertMatch" parameterType="com.dto.MatchInfoDto" >
+   insert into match_info(title, college, type, max_count, start_date, end_date)
+   value (#{matchInfoDto.title},#{matchInfoDto.college},#{matchInfoDto.type},#{matchInfoDto.maxCount},#{matchInfoDto.startDate},#{matchInfoDto.endDate})
+    </insert>
+
+</mapper>
