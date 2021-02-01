@@ -7,10 +7,12 @@
     <result column="status" property="status" jdbcType="BIT" />
     <result column="content" property="content" jdbcType="LONGVARBINARY" />
   </resultMap>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from news_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.entity.NewsInfo" >
     <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
       SELECT LAST_INSERT_ID()
@@ -20,6 +22,7 @@
     values (#{title,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, #{content,jdbcType=LONGVARBINARY}
       )
   </insert>
+
   <update id="updateByPrimaryKey" parameterType="com.entity.NewsInfo" >
     update news_info
     set title = #{title,jdbcType=VARCHAR},
@@ -27,11 +30,13 @@
       content = #{content,jdbcType=LONGVARBINARY}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select id, title, status, content
     from news_info
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, title, status, content
     from news_info

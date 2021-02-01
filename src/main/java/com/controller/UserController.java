@@ -29,12 +29,22 @@ public class UserController extends AbstractController{
         if(!StringUtils.isNumeric(currentPage) || !StringUtils.isNumeric(pageSize)){
             return fail("页码错误");
         }
-
+//        return fail("反正是足有偶偶搜啊的");
         Integer pageNum = Integer.valueOf(currentPage);
         Integer pageSizeNum = Integer.valueOf(pageSize);
         PageInfo<NewsInfo> pageInfo = userService.queryNews(pageNum, pageSizeNum);
         return successData(pageInfo);
     }
 
+    @GetMapping("/get-news-info")
+    public String getNewsById(String newsId){
+        System.out.println("newsid:"+newsId);
+        if(!StringUtils.isNumeric(newsId)){
+            return fail("newsId错误");
+        }
+        Integer newsIdInt = Integer.valueOf(newsId);
+        NewsInfo newsInfo = userService.queryNewById(newsIdInt);
+        return successData(newsInfo);
+    }
 
 }

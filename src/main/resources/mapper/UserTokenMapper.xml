@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.UserTokenMapper">
+
+    <insert id="insertToken">
+<!--添加user_token表-->
+        insert into user_token(`token`,user_info)
+        value (#{token},#{userInfo})
+    </insert>
+    <select id="queryToken" resultType="com.entity.UserToken">
+<!--通过token查找-->
+        select id id, `token` token, user_info userInfo
+        from user_token
+        where `token` = #{token}
+    </select>
+
+
+</mapper>

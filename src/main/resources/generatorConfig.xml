@@ -28,7 +28,7 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/speech_platform"
+                        connectionURL="jdbc:mysql://localhost:3306/test"
                         userId="root"
                         password="27893524Gt10">
         </jdbcConnection>
@@ -56,7 +56,7 @@
 
 
 
-        <table tableName="news_info" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+        <table tableName="match_info" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
             <generatedKey column="id" sqlStatement="mysql" identity="true"/>
             <columnOverride column="content" javaType="java.lang.String" />
 

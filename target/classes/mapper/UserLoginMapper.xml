@@ -14,7 +14,7 @@
     <select id="queryRole" resultType="com.entity.UserLogin">
         select id id, user_name userName, pass_wd passWord,`role` role
         from user_login
-        where user_name = #{userName} AND pass_wd=#{passWord}
+        where user_name = #{userName} AND pass_wd=#{passWord} 
     </select>
 
     <select id="queryByUserName" resultType="com.entity.UserLogin">

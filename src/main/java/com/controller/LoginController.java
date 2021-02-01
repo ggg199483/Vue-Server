@@ -1,6 +1,7 @@
 package com.controller;
 
 import com.entity.UserLogin;
+import com.entity.UserToken;
 import com.service.UserService;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class LoginController extends AbstractController {
 
     @Autowired
     private UserService userService;
-    private static Map userMap = new HashMap();
+    //private static Map userMap = new HashMap();
 
     @PostMapping("/login/loginbyemail")
     public String loginByemail(@RequestBody String body) {
@@ -27,19 +28,13 @@ public class LoginController extends AbstractController {
         resultMap.put("msg", "success");
         Role role = new Role();
         role.setRole(Arrays.asList("admin"));
-        String uuid = UUID.randomUUID().toString();
-        System.out.println("生成uuid:" + uuid);
-        role.setToken(uuid);
-        role.setIntroduction("guanliyuan");
-        role.setName(" super admin");
-        role.setUid("001");
-        userMap.put(uuid, role);
+        //userMap.put(uuid, role);
 
         //通过用户名和密码去查询role 然后返回给前端
         JSONObject jsonObject = JSONObject.parseObject(body);
         String userName = jsonObject.getString("email");
         String passWd = jsonObject.getString("password");
-        String userRole = jsonObject.getString("role");
+        //String userRole = jsonObject.getString("role");
         //查询是否存在账号
         //是 继续走下面
         //否 返回账号不存在
@@ -52,8 +47,18 @@ public class LoginController extends AbstractController {
             System.out.println("存在该用户");
             if (userLogin2 != null) {
                 System.out.println("查找到用户");
+
+                String uuid = UUID.randomUUID().toString();
+                System.out.println("生成uuid:" + uuid);
+                role.setToken(uuid);
+                role.setIntroduction("guanliyuan");
+                role.setName(" super admin");
+                role.setUid("001");
+                role.setUserId(userLogin2.getId());
                 role.setRole(Arrays.asList(userLogin2.getRole()));
                 System.out.println(userLogin2.getRole());
+                //userMap.put(uuid,role);
+                userService.insertUserToken(uuid,JSONObject.toJSONString(role));
                 return successData(role);
             }
             else {
@@ -72,26 +77,12 @@ public class LoginController extends AbstractController {
 
         System.out.println("userInfo!");
         System.out.println("token:" + token);
-        Object user = userMap.get(token);
-        return JSONObject.toJSONString(user);
-
-//        Map resultMap = new HashMap<>();
-//        resultMap.put("code",200);
-//        resultMap.put("msg","success");
-//        Role role = new Role();
-//        role.setRole(Arrays.asList("admin"));
-//        String uuid = UUID.randomUUID().toString();
-//        System.out.println("生成uuid:"+uuid);
-//        role.setToken(uuid);
-//        role.setIntroduction("guanliyuan");
-//        role.setName(" super admin");
-//        role.setUid("001");
-//        userMap.put(uuid,role);
-//        return JSONObject.toJSONString(role);
+        UserToken user = userService.queryByToken(token);
+        return user.getUserInfo();
     }
 
     @PostMapping("/user/register")//将注册信息比对后，写入user_login表
-    public String register(@RequestBody() String body) {
+    public String register(@RequestBody String body) {
         System.out.println(" register  body::" + body);
 
         JSONObject jsonObject2 = JSONObject.parseObject(body);
@@ -120,10 +111,10 @@ public class LoginController extends AbstractController {
     }
 
 
-    class Role {
-        private List<String> role;
+    static class Role {
+        private Integer userId;
 
-        private String token;
+        private List<String> role;
 
         private String introduction;
 
@@ -131,12 +122,14 @@ public class LoginController extends AbstractController {
 
         private String uid;
 
-        public List<String> getRole() {
-            return role;
+        private String token;
+
+        public Integer getUserId() {
+            return userId;
         }
 
-        public void setRole(List<String> role) {
-            this.role = role;
+        public void setUserId(Integer userId) {
+            this.userId = userId;
         }
 
         public String getToken() {
@@ -145,6 +138,14 @@ public class LoginController extends AbstractController {
 
         public void setToken(String token) {
             this.token = token;
+        }
+
+        public List<String> getRole() {
+            return role;
+        }
+
+        public void setRole(List<String> role) {
+            this.role = role;
         }
 
         public String getIntroduction() {

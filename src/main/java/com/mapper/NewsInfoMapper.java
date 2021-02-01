@@ -2,6 +2,7 @@ package com.mapper;
 
 import com.entity.NewsInfo;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
