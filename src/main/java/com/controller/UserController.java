@@ -2,6 +2,7 @@ package com.controller;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.dto.MatchInfoDto;
 import com.entity.News;
 import com.entity.NewsInfo;
 import com.github.pagehelper.PageInfo;
@@ -46,5 +47,7 @@ public class UserController extends AbstractController{
         NewsInfo newsInfo = userService.queryNewById(newsIdInt);
         return successData(newsInfo);
     }
+
+
 
 }

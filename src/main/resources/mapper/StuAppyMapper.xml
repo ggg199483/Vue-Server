@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mapper.StuAppyMapper" >
+  <resultMap id="BaseResultMap" type="com.entity.StuAppy" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="student_id" property="studentId" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="match_id" property="matchId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="match_status" property="matchStatus" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from stu_appy
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.entity.StuAppy" >
+    <selectKey resultType="java.lang.Integer" keyProperty="id" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into stu_appy (student_id, user_name, match_id, 
+      create_time, match_status, status
+      )
+    values (#{studentId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{matchId,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{matchStatus,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.entity.StuAppy" >
+    update stu_appy
+    set student_id = #{studentId,jdbcType=INTEGER},
+      user_name = #{userName,jdbcType=VARCHAR},
+      match_id = #{matchId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      match_status = #{matchStatus,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, student_id, user_name, match_id, create_time, match_status, status
+    from stu_appy
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, student_id, user_name, match_id, create_time, match_status, status
+    from stu_appy
+  </select>
+
+  <select id="selectStuAppyList" resultType="com.dto.StuAppyDto">
+    select sa.id,
+           mi.type type,
+           sa.student_id studentId,
+           sa.user_name  studentName,
+           sa.match_id   matchId,
+           sa.create_time   createTime,
+           sa.match_status  matchStatus
+    from stu_appy AS sa
+    LEFT JOIN match_info mi ON sa.match_id = mi.id
+    where sa.status=1 AND mi.status=1 AND sa.match_id = #{matchId,jdbcType=INTEGER}
+  </select>
+
+
+</mapper>

@@ -1,6 +1,7 @@
 package com.service;
 
 import com.dto.MatchInfoDto;
+import com.dto.StuAppyDto;
 import com.entity.MatchInfo;
 import com.entity.NewsInfo;
 import com.entity.UserLogin;
@@ -30,5 +31,15 @@ public interface UserService {
 
     PageInfo<MatchInfoDto> queryMatchs(Integer currentPage, Integer pageSize);//获取所有match_info信息
 
+    PageInfo<MatchInfoDto> queryMyMatchs(Integer currentPage, Integer pageSize,Integer teacherId);//获取所有match_info信息
+
+    MatchInfoDto queryMatchInfo(Integer matchId);
+
     Integer insertMatchInfo(MatchInfoDto matchInfoDto);
+
+    Integer selectTeacherId(Integer id);//通过竞赛信息的Id查找对应老师Id
+
+    Integer updateTeacherId(Integer teacherId,Integer id);//通过竞赛列表的Id修改老师Id
+
+    PageInfo<StuAppyDto> queryStuMatchs(Integer currentPage, Integer pageSize,Integer matchId);//获取所有stu_appy信息
 }

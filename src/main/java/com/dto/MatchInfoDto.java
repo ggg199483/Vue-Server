@@ -11,7 +11,16 @@ public class MatchInfoDto implements Serializable {
     private String startDate;
     private String endDate;
     private Integer maxCount;
+    private Integer stuNum;
     private String college;
+
+    public Integer getStuNum() {
+        return stuNum;
+    }
+
+    public void setStuNum(Integer stuNum) {
+        this.stuNum = stuNum;
+    }
 
     public String getCollege() {
         return college;

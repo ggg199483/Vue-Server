@@ -52,7 +52,7 @@ public class LoginController extends AbstractController {
                 System.out.println("生成uuid:" + uuid);
                 role.setToken(uuid);
                 role.setIntroduction("guanliyuan");
-                role.setName(" super admin");
+                role.setName(userLogin2.getRealName());
                 role.setUid("001");
                 role.setUserId(userLogin2.getId());
                 role.setRole(Arrays.asList(userLogin2.getRole()));

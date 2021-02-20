@@ -14,6 +14,8 @@ public class UserLogin implements Serializable {
     private String passWord;
     private String role;
 
+    private String realName;
+
 
     public UserLogin() {
     }
@@ -22,6 +24,14 @@ public class UserLogin implements Serializable {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 
     public String getRole() {

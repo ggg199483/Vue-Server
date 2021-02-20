@@ -1,16 +1,14 @@
 package com.service;
 
 import com.dto.MatchInfoDto;
+import com.dto.StuAppyDto;
 import com.entity.MatchInfo;
 import com.entity.NewsInfo;
 import com.entity.UserLogin;
 import com.entity.UserToken;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.mapper.MatchInfoMapper;
-import com.mapper.NewsInfoMapper;
-import com.mapper.UserLoginMapper;
-import com.mapper.UserTokenMapper;
+import com.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +28,8 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private MatchInfoMapper matchInfoMapper;
 
+    @Autowired
+    private StuAppyMapper stuAppyMapper;
 
     @Override
     public void insertUserLogin(String userName, String passWd,String role) {
@@ -89,6 +89,7 @@ public class UserServiceImpl implements UserService{
         return newsInfoMapper.selectByPrimaryKey(newId);
     }
 
+    @Override
     public PageInfo<MatchInfoDto> queryMatchs(Integer currentPage, Integer pageSize){
         PageHelper.startPage(currentPage,pageSize);
         List<MatchInfoDto> matchInfos = matchInfoMapper.selectMatchInfoDtoList();
@@ -97,9 +98,38 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public PageInfo<MatchInfoDto> queryMyMatchs(Integer currentPage, Integer pageSize, Integer teacherId) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<MatchInfoDto> matchInfos = matchInfoMapper.selectMyMatchInfoDtoList(teacherId);
+        PageInfo<MatchInfoDto> pageInfo = new PageInfo<>(matchInfos);
+        return pageInfo;
+    }
+
+    @Override
+    public MatchInfoDto queryMatchInfo(Integer matchId) {
+        return matchInfoMapper.selectMatchInfoDto(matchId);
+    }
+
+    @Override
     public Integer insertMatchInfo(MatchInfoDto matchInfoDto) {
        return matchInfoMapper.insertMatch(matchInfoDto);
     }
 
+    @Override
+    public Integer selectTeacherId(Integer id) {
+        return matchInfoMapper.selectTeaId(id);
+    }
 
+    @Override
+    public Integer updateTeacherId(Integer teacherId, Integer id) {
+        return matchInfoMapper.updateTeaId(teacherId,id);
+    }
+
+    @Override
+    public PageInfo<StuAppyDto> queryStuMatchs(Integer currentPage, Integer pageSize,Integer matchId) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<StuAppyDto> stuInfos = stuAppyMapper.selectStuAppyList(matchId);
+        PageInfo<StuAppyDto> pageInfo = new PageInfo<>(stuInfos);
+        return pageInfo;
+    }
 }

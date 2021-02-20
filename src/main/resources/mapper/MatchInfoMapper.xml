@@ -43,20 +43,79 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, title, college, type, max_count, status, create_date, teacher_id
+    select id, title, college, type, max_count, status, create_date, teacher_id,num
     from match_info
   </select>
 
  <select id="selectMatchInfoDtoList" resultType="com.dto.MatchInfoDto">
-   SELECT mi.id, mi.title, `type`, mi.max_count maxCount, create_date createDate, start_date startDate, end_date endDate, ul.user_name teacherName,ci.college,max_count maxCount FROM match_info AS  mi
-   LEFT JOIN user_login ul ON mi.teacher_id = ul.id
-   LEFT JOIN college_info ci ON mi.college = ci.id
+   SELECT mi.id,
+          mi.title,
+          `type`,
+          mi.max_count maxCount,
+          create_date  createDate,
+          start_date   startDate,
+          end_date     endDate,
+          ul.user_name teacherName,
+          ci.college,
+          COUNT(sa.id) stuNum
+   FROM match_info AS mi
+          LEFT JOIN user_login ul ON mi.teacher_id = ul.id
+          LEFT JOIN college_info ci ON mi.college = ci.id
+          LEFT JOIN stu_appy sa ON sa.match_id = mi.id AND mi.status = 1
    WHERE mi.status = 1
+   GROUP BY mi.id
  </select>
+
+    <select id="selectMyMatchInfoDtoList" resultType="com.dto.MatchInfoDto">
+        SELECT mi.id,
+               mi.title,
+               `type`,
+               mi.max_count maxCount,
+               create_date  createDate,
+               start_date   startDate,
+               end_date     endDate,
+               ul.user_name teacherName,
+               ci.college,
+               COUNT(sa.id) stuNum
+        FROM match_info AS mi
+                 LEFT JOIN user_login ul ON mi.teacher_id = ul.id
+                 LEFT JOIN college_info ci ON mi.college = ci.id
+                 LEFT JOIN stu_appy sa ON sa.match_id = mi.id AND mi.status = 1
+        WHERE mi.status = 1 AND mi.teacher_id=#{teacherId,jdbcType=INTEGER}
+        GROUP BY mi.id
+    </select>
+
+    <select id="selectMatchInfoDto" resultType="com.dto.MatchInfoDto">
+        SELECT mi.id,
+               mi.title,
+               `type`,
+               mi.max_count maxCount,
+               create_date  createDate,
+               start_date   startDate,
+               end_date     endDate,
+               ul.user_name teacherName,
+               ci.college,
+               COUNT(sa.id) stuNum
+        FROM match_info AS mi
+                 LEFT JOIN user_login ul ON mi.teacher_id = ul.id
+                 LEFT JOIN college_info ci ON mi.college = ci.id
+                 LEFT JOIN stu_appy sa ON sa.match_id = mi.id AND mi.status = 1
+        WHERE mi.status = 1 AND mi.id = #{matchId,jdbcType=INTEGER}
+    </select>
 
     <insert id="insertMatch" parameterType="com.dto.MatchInfoDto" >
    insert into match_info(title, college, type, max_count, start_date, end_date)
    value (#{matchInfoDto.title},#{matchInfoDto.college},#{matchInfoDto.type},#{matchInfoDto.maxCount},#{matchInfoDto.startDate},#{matchInfoDto.endDate})
     </insert>
 
+  <select id="selectTeaId" resultType="java.lang.Integer">
+    SELECT teacher_id  from match_info
+    WHERE status = 1 AND id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <update id="updateTeaId" >
+   update match_info
+   set teacher_id = #{teacherId,jdbcType=INTEGER}
+   where id = #{id,jdbcType=INTEGER}
+  </update>
 </mapper>

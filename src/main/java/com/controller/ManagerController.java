@@ -22,7 +22,6 @@ public class ManagerController extends AbstractController {
         if (!StringUtils.isNumeric(currentPage) || !StringUtils.isNumeric(pageSize)) {
             return fail("页码错误");
         }
-
         Integer pageNum = Integer.valueOf(currentPage);
         Integer pageSizeNum = Integer.valueOf(pageSize);
         PageInfo<MatchInfoDto> pageInfo = userService.queryMatchs(pageNum, pageSizeNum);

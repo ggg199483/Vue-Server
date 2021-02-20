@@ -56,9 +56,9 @@
 
 
 
-        <table tableName="match_info" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
+        <table tableName="stu_appy" enableCountByExample="false" enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false">
             <generatedKey column="id" sqlStatement="mysql" identity="true"/>
-            <columnOverride column="content" javaType="java.lang.String" />
+<!--            <columnOverride column="content" javaType="java.lang.String" />-->
 
         </table>
     </context>

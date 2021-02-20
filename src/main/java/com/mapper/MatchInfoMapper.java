@@ -21,5 +21,13 @@ public interface MatchInfoMapper {
 
     List<MatchInfoDto> selectMatchInfoDtoList();
 
+    List<MatchInfoDto> selectMyMatchInfoDtoList(@Param("teacherId")Integer teacherId);
+
     Integer insertMatch(@Param("matchInfoDto") MatchInfoDto matchInfoDto);
+
+    Integer selectTeaId(@Param("id")Integer id);//查找竞赛老师
+
+    Integer updateTeaId(@Param("teacherId")Integer teacherId,@Param("id")Integer id);//修改竞赛老师
+
+    MatchInfoDto selectMatchInfoDto(@Param("matchId")Integer matchId);
 }
