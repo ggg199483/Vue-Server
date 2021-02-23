@@ -68,15 +68,23 @@ public class TeacherController extends AbstractController{
 
         Integer teacherId = userService.selectTeacherId(id);
 
+        MatchInfo checkcollege=userService.checkCollege(id);
+
         if(teacherId !=null && teacherId > 0){
             return fail("该竞赛已有负责老师");
         }
-        Integer result = userService.updateTeacherId(Integer.valueOf(role.getUserId()), id);
-        if(result > 0){
-            return success("老师报名成功");
-        }else{
-            return fail("fail");
+        if(checkcollege.getCollege()==role.getCollege()){
+            Integer result = userService.updateTeacherId(Integer.valueOf(role.getUserId()), id);
+            if(result > 0){
+                return success("老师报名成功");
+            }else{
+                return fail("报名失败");
+            }
         }
+        else {
+            return fail("学院不同 不可报名");
+        }
+
 
     }
 
@@ -97,9 +105,43 @@ public class TeacherController extends AbstractController{
 
     @GetMapping("/get-matchinfo")
     public String getStuMatch(Integer matchId) {
-        System.out.println("sss"+matchId);
+        System.out.println("matchId:"+matchId);
         MatchInfoDto pageInfo=userService.queryMatchInfo(matchId);
         return successData(pageInfo);
     }
 
+    @PostMapping("/apply-pass")
+    public String applyDisposeP(@RequestBody String body){
+        JSONObject jsonObject = JSONObject.parseObject(body);
+        Integer id=jsonObject.getInteger("id");
+        System.out.println("请求到了stu_appy中的id"+id);
+        Integer result =userService.disposeMatchStatus(id,1);
+        System.out.println(result);
+        if(result > 0){
+            return success("该学生审核通过");
+        }else{
+            return fail("修改失败");
+        }
+    }
+
+    @PostMapping("/apply-fail")
+    public String applyDisposeF(@RequestBody String body){
+        JSONObject jsonObject = JSONObject.parseObject(body);
+        Integer id=jsonObject.getInteger("id");
+        System.out.println("请求到了stu_appy中的id"+id);
+        Integer result =userService.disposeMatchStatus(id,2);
+        if(result > 0){
+            return success("该学生审核不通过");
+        }else{
+            return fail("修改失败");
+        }
+    }
+
+    @GetMapping("/check_passnum")
+    public String checkPassNumByMatchId(Integer matchId){
+        System.out.println("matchId:"+matchId);
+        Integer passNum= userService.checkPassNum(matchId);
+        System.out.println("成功加入该竞赛人数为"+passNum);
+        return successData(passNum);
+    }
 }

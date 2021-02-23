@@ -37,11 +37,18 @@
       teacher_id = #{teacherId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, title, college, type, max_count, status, create_date, teacher_id
-    from match_info
-    where id = #{id,jdbcType=INTEGER}
-  </select>
+    <select id="checkCollege" resultType="com.entity.MatchInfo">
+        select id,
+               title,
+               college,
+               status,
+               `type`,
+               max_count   maxCount,
+               create_date createDate,
+               teacher_id  teacherId
+        from match_info
+        where id = #{id,jdbcType=INTEGER}
+    </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, title, college, type, max_count, status, create_date, teacher_id,num
     from match_info
@@ -61,7 +68,7 @@
    FROM match_info AS mi
           LEFT JOIN user_login ul ON mi.teacher_id = ul.id
           LEFT JOIN college_info ci ON mi.college = ci.id
-          LEFT JOIN stu_appy sa ON sa.match_id = mi.id AND mi.status = 1
+          LEFT JOIN stu_appy sa ON sa.match_id = mi.id AND sa.status = 1
    WHERE mi.status = 1
    GROUP BY mi.id
  </select>
@@ -80,7 +87,7 @@
         FROM match_info AS mi
                  LEFT JOIN user_login ul ON mi.teacher_id = ul.id
                  LEFT JOIN college_info ci ON mi.college = ci.id
-                 LEFT JOIN stu_appy sa ON sa.match_id = mi.id AND mi.status = 1
+                 LEFT JOIN stu_appy sa ON sa.match_id = mi.id AND sa.status = 1
         WHERE mi.status = 1 AND mi.teacher_id=#{teacherId,jdbcType=INTEGER}
         GROUP BY mi.id
     </select>
@@ -99,7 +106,7 @@
         FROM match_info AS mi
                  LEFT JOIN user_login ul ON mi.teacher_id = ul.id
                  LEFT JOIN college_info ci ON mi.college = ci.id
-                 LEFT JOIN stu_appy sa ON sa.match_id = mi.id AND mi.status = 1
+                 LEFT JOIN stu_appy sa ON sa.match_id = mi.id AND sa.status = 1
         WHERE mi.status = 1 AND mi.id = #{matchId,jdbcType=INTEGER}
     </select>
 
@@ -113,9 +120,10 @@
     WHERE status = 1 AND id = #{id,jdbcType=INTEGER}
   </select>
 
+
   <update id="updateTeaId" >
    update match_info
    set teacher_id = #{teacherId,jdbcType=INTEGER}
-   where id = #{id,jdbcType=INTEGER}
+   where id = #{id,jdbcType=INTEGER} AND status=1
   </update>
 </mapper>

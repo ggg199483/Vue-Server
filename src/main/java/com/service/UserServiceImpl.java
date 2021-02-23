@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService{
     private StuAppyMapper stuAppyMapper;
 
     @Override
-    public void insertUserLogin(String userName, String passWd,String role) {
-        userLoginMapper.insertUser(userName,passWd,role);
+    public void insertUserLogin(String userName, String passWd,String role,Integer college) {
+        userLoginMapper.insertUser(userName,passWd,role,college);
     }
 
     @Override
@@ -106,6 +106,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public MatchInfo checkCollege(Integer id) {
+        return matchInfoMapper.checkCollege(id);
+    }
+
+    @Override
     public MatchInfoDto queryMatchInfo(Integer matchId) {
         return matchInfoMapper.selectMatchInfoDto(matchId);
     }
@@ -131,5 +136,15 @@ public class UserServiceImpl implements UserService{
         List<StuAppyDto> stuInfos = stuAppyMapper.selectStuAppyList(matchId);
         PageInfo<StuAppyDto> pageInfo = new PageInfo<>(stuInfos);
         return pageInfo;
+    }
+
+    @Override
+    public Integer disposeMatchStatus(Integer id,Integer matchStatus) {
+        return stuAppyMapper.updateMatchStatus(id,matchStatus);
+    }
+
+    @Override
+    public Integer checkPassNum(Integer matchId) {
+        return stuAppyMapper.checkStuNum(matchId);
     }
 }

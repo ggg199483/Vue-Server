@@ -9,7 +9,7 @@ import com.entity.UserToken;
 import com.github.pagehelper.PageInfo;
 
 public interface UserService {
-    void insertUserLogin(String userName, String passWd,String role);
+    void insertUserLogin(String userName, String passWd,String role,Integer college);
 
     void updateUserpassWd(String userName, String passWd);
 
@@ -33,6 +33,8 @@ public interface UserService {
 
     PageInfo<MatchInfoDto> queryMyMatchs(Integer currentPage, Integer pageSize,Integer teacherId);//获取所有match_info信息
 
+    MatchInfo checkCollege(Integer id);
+
     MatchInfoDto queryMatchInfo(Integer matchId);
 
     Integer insertMatchInfo(MatchInfoDto matchInfoDto);
@@ -42,4 +44,8 @@ public interface UserService {
     Integer updateTeacherId(Integer teacherId,Integer id);//通过竞赛列表的Id修改老师Id
 
     PageInfo<StuAppyDto> queryStuMatchs(Integer currentPage, Integer pageSize,Integer matchId);//获取所有stu_appy信息
+
+    Integer disposeMatchStatus(Integer id,Integer matchStatus);//改变审核状态
+
+    Integer checkPassNum(Integer matchId);//计算该竞赛人数是否超过maxCount
 }

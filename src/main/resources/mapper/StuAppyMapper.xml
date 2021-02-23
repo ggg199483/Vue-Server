@@ -58,5 +58,16 @@
     where sa.status=1 AND mi.status=1 AND sa.match_id = #{matchId,jdbcType=INTEGER}
   </select>
 
+  <update id="updateMatchStatus" >
+    update stu_appy
+    set match_status=#{matchStatus,jdbcType=INTEGER}
+    where status=1 AND id =#{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="checkStuNum" resultType="java.lang.Integer">
+    select count(id)
+    from stu_appy
+    where status=1 and match_status=1 and match_id = #{matchId,jdbcType=INTEGER}
+  </select>
 
 </mapper>
