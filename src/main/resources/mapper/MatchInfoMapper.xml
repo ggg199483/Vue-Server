@@ -63,6 +63,7 @@
           start_date   startDate,
           end_date     endDate,
           ul.user_name teacherName,
+          ul.real_name realName,
           ci.college,
           COUNT(sa.id) stuNum
    FROM match_info AS mi
@@ -82,6 +83,7 @@
                start_date   startDate,
                end_date     endDate,
                ul.user_name teacherName,
+               ul.real_name realName,
                ci.college,
                COUNT(sa.id) stuNum
         FROM match_info AS mi
@@ -101,6 +103,7 @@
                start_date   startDate,
                end_date     endDate,
                ul.user_name teacherName,
+               ul.real_name realName,
                ci.college,
                COUNT(sa.id) stuNum
         FROM match_info AS mi

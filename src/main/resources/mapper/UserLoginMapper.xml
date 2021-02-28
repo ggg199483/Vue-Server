@@ -6,38 +6,45 @@
 
     <!--select开头 查询   有返回值-->
     <select id="queryById" resultType="com.entity.UserLogin">
-        select id id, user_name userName, pass_wd passWord
+        select id id, user_name userName, pass_wd passWord,real_name realName,college college
         from user_login
-        where id = #{id}
+        where id = #{id} AND status=1
     </select>
 
     <select id="queryRole" resultType="com.entity.UserLogin">
-        select id id, user_name userName, pass_wd passWord,`role` role,real_name realName
+        select id id, user_name userName, pass_wd passWord,`role` role, college college ,real_name realName
         from user_login
-        where user_name = #{userName} AND pass_wd=#{passWord} 
+        where user_name = #{userName} AND pass_wd=#{passWord} AND status=1
     </select>
 
     <select id="queryByUserName" resultType="com.entity.UserLogin">
-        select id id, user_name userName, pass_wd passWord,`role` role
+        select id id, user_name userName, pass_wd passWord,`role` role,college,real_name realName
         from user_login
-        where user_name = #{userName}
+        where user_name = #{userName} AND status=1
     </select>
 
     <!--    insert  添加    update 修改  delete  删除   返回值int >0成功  -->
     <insert id="insertUser">
-        insert into user_login(user_name, pass_wd,`role`)
-        values (#{userName}, #{passWord}, #{role})
+        insert into user_login(user_name, pass_wd,`role`,college)
+        values (#{userName}, #{passWord}, #{role},#{college})
     </insert>
 
     <update id="updatepassWd">
         update user_login
         set pass_wd = #{passWord}
-        where user_name = #{userName}
+        where user_name = #{userName} AND status=1
     </update>
 
     <select id="queryUserNameByUserId" resultType="java.lang.String">
         SELECT user_name
         FROM user_login
-        WHERE id = #{userIdss}
+        WHERE id = #{userIdss} AND status=1
+    </select>
+
+    <select id="queryUserCollege" resultType="java.lang.String">
+        SELECT ci.college
+        FROM user_login AS ul
+        left join college_info ci on ul.college=ci.id
+        WHERE ul.id = #{id,jdbcType=INTEGER} AND ul.status=1
     </select>
 </mapper>

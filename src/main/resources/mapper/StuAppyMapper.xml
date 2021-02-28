@@ -41,7 +41,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, student_id, user_name, match_id, create_time, match_status, status
+    select id, student_id, user_name, match_id, create_time, match_status, status,teaRealName
     from stu_appy
   </select>
 
@@ -50,10 +50,13 @@
            mi.type type,
            sa.student_id studentId,
            sa.user_name  studentName,
+           ul.real_name realName,
+           sa.teareal_name teaRealName,
            sa.match_id   matchId,
            sa.create_time   createTime,
            sa.match_status  matchStatus
     from stu_appy AS sa
+    LEFT JOIN user_login ul ON sa.student_id = ul.id
     LEFT JOIN match_info mi ON sa.match_id = mi.id
     where sa.status=1 AND mi.status=1 AND sa.match_id = #{matchId,jdbcType=INTEGER}
   </select>
@@ -70,4 +73,32 @@
     where status=1 and match_status=1 and match_id = #{matchId,jdbcType=INTEGER}
   </select>
 
+  <insert id="insertStuApply">
+    insert into stu_appy(student_id,user_name,match_id,teareal_name)
+    values (#{studentId}, #{userName}, #{matchId}),#{tearRealName}
+  </insert>
+
+  <select id="checkStuApply" resultType="java.lang.Integer">
+    select id
+    from stu_appy
+    where status=1 and  match_id = #{matchId,jdbcType=INTEGER} AND student_id=#{studentId,jdbcType=INTEGER}
+    </select>
+
+  <select id="selectMyApplyList" resultType="com.dto.StuAppyDto">
+    select sa.id,
+           mi.title,
+           mi.type type,
+           sa.student_id studentId,
+           sa.user_name  studentName,
+           ul.real_name realName,
+           sa.teareal_name teaRealName,
+           sa.match_id   matchId,
+           sa.create_time   createTime,
+           mi.end_date endDate,
+           sa.match_status  matchStatus
+    from stu_appy AS sa
+           LEFT JOIN user_login ul ON sa.student_id = ul.id
+           LEFT JOIN match_info mi ON sa.match_id = mi.id
+    where sa.status=1 AND mi.status=1 AND student_id=#{studentId,jdbcType=INTEGER}
+  </select>
 </mapper>
