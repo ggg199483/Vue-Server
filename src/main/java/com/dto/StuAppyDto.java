@@ -13,11 +13,17 @@ public class StuAppyDto {
 
     private String studentName;
 
+    private String teaRealName;
+
+    private String realName;
+
     private Integer matchId;
 
     private String createTime;
 
     private Integer matchStatus;
+
+    private String endDate;
 
     private Integer status;
 
@@ -61,6 +67,14 @@ public class StuAppyDto {
         this.studentName = userName;
     }
 
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
     public Integer getMatchId() {
         return matchId;
     }
@@ -83,6 +97,22 @@ public class StuAppyDto {
 
     public void setMatchStatus(Integer matchStatus) {
         this.matchStatus = matchStatus;
+    }
+
+    public String getTeaRealName() {
+        return teaRealName;
+    }
+
+    public void setTeaRealName(String teaRealName) {
+        this.teaRealName = teaRealName;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
     }
 
     public Integer getStatus() {

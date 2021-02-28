@@ -65,6 +65,10 @@ public class UserServiceImpl implements UserService{
        return userLoginMapper.queryUserNameByUserId(userId);
     }
 
+    @Override
+    public String queryUserCollege(Integer id) {
+        return userLoginMapper.queryUserCollege(id);
+    }
 
     public PageInfo<NewsInfo> queryNews(Integer currentPage, Integer pageSize){
         PageHelper.startPage(currentPage,pageSize);
@@ -139,6 +143,14 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public PageInfo<StuAppyDto> queryMyApplyList(Integer currentPage, Integer pageSize, Integer studentId) {
+        PageHelper.startPage(currentPage,pageSize);
+        List<StuAppyDto> stuInfos = stuAppyMapper.selectMyApplyList(studentId);
+        PageInfo<StuAppyDto> pageInfo = new PageInfo<>(stuInfos);
+        return pageInfo;
+    }
+
+    @Override
     public Integer disposeMatchStatus(Integer id,Integer matchStatus) {
         return stuAppyMapper.updateMatchStatus(id,matchStatus);
     }
@@ -146,5 +158,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public Integer checkPassNum(Integer matchId) {
         return stuAppyMapper.checkStuNum(matchId);
+    }
+
+    @Override
+    public Integer insertStuApply(Integer studentId, String userName, Integer matchId) {
+        return stuAppyMapper.insertStuApply(studentId,userName,matchId);
+    }
+
+    @Override
+    public Integer checkStuApply(Integer matchId, Integer studentId) {
+        return stuAppyMapper.checkStuApply(matchId,studentId);
     }
 }

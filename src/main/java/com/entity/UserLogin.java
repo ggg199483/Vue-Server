@@ -15,15 +15,26 @@ public class UserLogin implements Serializable {
     private String role;
 
     private String realName;
+    private Integer college;
+
 
 
     public UserLogin() {
     }
 
-    public UserLogin(int id, String userName, String passWord) {
+    public UserLogin(int id, String userName, String passWord,Integer college) {
         this.id = id;
         this.userName = userName;
         this.passWord = passWord;
+        this.college=college;
+    }
+
+    public Integer getCollege() {
+        return college;
+    }
+
+    public void setCollege(Integer college) {
+        this.college = college;
     }
 
     public String getRealName() {

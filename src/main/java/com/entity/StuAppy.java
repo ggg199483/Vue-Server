@@ -15,6 +15,8 @@ public class StuAppy {
 
     private Integer matchStatus;
 
+    private String teaRealName;
+
     private Integer status;
 
     public Integer getId() {
@@ -63,6 +65,14 @@ public class StuAppy {
 
     public void setMatchStatus(Integer matchStatus) {
         this.matchStatus = matchStatus;
+    }
+
+    public String getTeaRealName() {
+        return teaRealName;
+    }
+
+    public void setTeaRealName(String teaRealName) {
+        this.teaRealName = teaRealName;
     }
 
     public Integer getStatus() {

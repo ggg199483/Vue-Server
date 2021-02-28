@@ -13,6 +13,7 @@ public class MatchInfoDto implements Serializable {
     private Integer maxCount;
     private Integer stuNum;
     private String college;
+    private String realName;
 
     public Integer getStuNum() {
         return stuNum;
@@ -92,5 +93,13 @@ public class MatchInfoDto implements Serializable {
 
     public void setMaxCount(Integer maxCount) {
         this.maxCount = maxCount;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
     }
 }

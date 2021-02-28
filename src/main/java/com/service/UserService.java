@@ -7,6 +7,8 @@ import com.entity.NewsInfo;
 import com.entity.UserLogin;
 import com.entity.UserToken;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 public interface UserService {
     void insertUserLogin(String userName, String passWd,String role,Integer college);
@@ -18,6 +20,8 @@ public interface UserService {
     UserLogin queryById(Integer userId);
 
     String queryUserNameByUserId(Integer userId);
+
+    String queryUserCollege(Integer id);
 
     UserLogin queryRoleByUserName(String userName, String passWd);//通过账号密码获取用户信息
 
@@ -45,7 +49,13 @@ public interface UserService {
 
     PageInfo<StuAppyDto> queryStuMatchs(Integer currentPage, Integer pageSize,Integer matchId);//获取所有stu_appy信息
 
+    PageInfo<StuAppyDto> queryMyApplyList(Integer currentPage, Integer pageSize,Integer studentId);
+
     Integer disposeMatchStatus(Integer id,Integer matchStatus);//改变审核状态
 
     Integer checkPassNum(Integer matchId);//计算该竞赛人数是否超过maxCount
+
+    Integer insertStuApply(Integer studentId,String userName,Integer matchId);//插入学生申请
+
+    Integer checkStuApply(Integer matchId,Integer studentId);//查找申请是否存在
 }

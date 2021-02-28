@@ -43,6 +43,9 @@ public class LoginController extends AbstractController {
         //否 密码错误
         UserLogin userLogin1 = userService.queryByUserName(userName);
         UserLogin userLogin2 = userService.queryRoleByUserName(userName, passWd);
+//        System.out.println("-----------");
+//        System.out.println("College:"+userLogin2.getCollege());
+//        System.out.println("-----------");
         if (userLogin1 != null) {
             System.out.println("存在该用户");
             if (userLogin2 != null) {
@@ -53,7 +56,7 @@ public class LoginController extends AbstractController {
                 role.setToken(uuid);
                 role.setIntroduction("guanliyuan");
                 role.setName(userLogin2.getRealName());
-                role.setUid("001");
+                role.setCollege(userLogin2.getCollege());
                 role.setUserId(userLogin2.getId());
                 role.setRole(Arrays.asList(userLogin2.getRole()));
                 System.out.println(userLogin2.getRole());
@@ -89,12 +92,13 @@ public class LoginController extends AbstractController {
         String userName = jsonObject2.getString("email");
         String passWd = jsonObject2.getString("password");
         String role = jsonObject2.getString("role");
+        Integer college= jsonObject2.getInteger("college");
         System.out.println(role);
         UserLogin userLogin = userService.queryByUserName(userName);
         if (userLogin != null) {
             return fail("该用户已存在");
         } else {
-            userService.insertUserLogin(userName, passWd, role);
+            userService.insertUserLogin(userName, passWd, role,college);
         }
         return success("注册成功");
 
@@ -120,7 +124,8 @@ public class LoginController extends AbstractController {
 
         private String name;
 
-        private String uid;
+        private Integer college;
+
 
         private String token;
 
@@ -164,12 +169,12 @@ public class LoginController extends AbstractController {
             this.name = name;
         }
 
-        public String getUid() {
-            return uid;
+        public Integer getCollege() {
+            return college;
         }
 
-        public void setUid(String uid) {
-            this.uid = uid;
+        public void setCollege(Integer college) {
+            this.college = college;
         }
     }
 }
