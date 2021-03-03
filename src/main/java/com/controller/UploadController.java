@@ -27,7 +27,9 @@ public class UploadController extends AbstractController{
         }
         request.getHeader("");
         String fileName = file.getOriginalFilename();
-        String filePath = "D:/360Downloads/21/";
+        //生成文件地址
+        //可以新建一个  id-地址 对应的文件表 然后读取地址表获取文件的地址
+        String filePath = "D:/download/";
         File dest = new File(filePath + fileName);
         try {
             if (!dest.exists()) {// 判断目录是否存在
@@ -42,37 +44,24 @@ public class UploadController extends AbstractController{
     }
 
 
+    /**
+     * 获取下载文件地址  nodeJS直接下载
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @GetMapping("/download")
-    public String downLoad( HttpServletResponse response) throws Exception {
-        System.out.printf("dddddddddddddddddddddddddddd");
-        String filePath = "D:/360Downloads/21/test2.txt";
-        response.setHeader("media", "file");
-        return  filePath;
+    public String downLoadUrl( HttpServletResponse response) {
+        System.out.printf("url");
+        String filePath = "D:/download/downloadFinal.zip";
+        //后台根据download的参数去寻找文件 然后找到文件路径filePath
+        File file = new File(filePath);
+        if (!file.exists()){
+            //文件不存在返回文件不存在提示
+            return  fail(filePath);
+        }
+        return successData(filePath);
     }
 
-//    public void downLoad( HttpServletResponse response) throws Exception {
-//        System.out.printf("dddddddddddddddddddddddddddd");
-//        String filePath = "D:/360Downloads/21/鼠标连点器(F3开 F4关).exe";
-//        File f = new File(filePath);
-//        if (!f.exists()) {
-//            response.sendError(404, "File not found!");
-//            return;
-//        }
-//        BufferedInputStream br = new BufferedInputStream(new FileInputStream(f));
-//        byte[] buf = new byte[1024];
-//        int len = 0;
-//
-//        response.reset(); // 非常重要
-//        response.setContentType("application/octet-stream");
-//        response.setHeader("Content-Disposition", "attachment; filename=" + f.getName());
-//        response.setHeader("Pragma", "No-cache");
-//        response.setHeader("Cache-Control", "No-cache");
-//        response.setDateHeader("Expires", 0);
-//        OutputStream out = response.getOutputStream();
-//        while ((len = br.read(buf)) > 0)
-//            out.write(buf, 0, len);
-//        br.close();
-//        out.close();
-//    }
 
 }
