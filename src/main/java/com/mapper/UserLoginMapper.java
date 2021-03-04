@@ -16,7 +16,7 @@ public interface UserLoginMapper {
 
     String queryUserCollege(@Param("id")Integer id);
 
-    void updatepassWd(@Param("userName") String userName,@Param("passWord") String passWord);
+    void updatePassWd(@Param("userName") String userName,@Param("passWord") String passWord);
 
     UserLogin queryRole(String userName, @Param("passWord")String passWd);
 

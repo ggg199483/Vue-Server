@@ -29,7 +29,7 @@
         values (#{userName}, #{passWord}, #{role},#{college})
     </insert>
 
-    <update id="updatepassWd">
+    <update id="updatePassWd">
         update user_login
         set pass_wd = #{passWord}
         where user_name = #{userName} AND status=1

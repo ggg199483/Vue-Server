@@ -37,8 +37,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updateUserpassWd(String userName, String passWd) {
-        userLoginMapper.updatepassWd(userName,passWd);
+    public void updateUserPassWd(String userName, String passWd) {
+        userLoginMapper.updatePassWd(userName,passWd);
     }
 
     @Override

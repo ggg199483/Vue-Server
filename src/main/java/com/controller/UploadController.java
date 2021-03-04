@@ -21,16 +21,21 @@ public class UploadController extends AbstractController{
     public String upload(@RequestParam("file") MultipartFile file, HttpServletRequest request) {
 
 
-        System.out.printf("**********************upload*********");
+        System.out.printf("*******************upload*********");
         if (file.isEmpty()) {
             return "上传失败，请选择文件";
         }
         request.getHeader("");
+        //以 String 的形式返回指定请求头的值。如果该请求不包含指定名称的头，则此方法返回 null。
+        // 如果有多个具有相同名称的头，则此方法返回请求中的第一个头。头名称是不区分大小写的。可以将此方法与任何请求头一起使用
+
         String fileName = file.getOriginalFilename();
+        System.out.println("fileName:"+fileName);
         //生成文件地址
         //可以新建一个  id-地址 对应的文件表 然后读取地址表获取文件的地址
-        String filePath = "D:/download/";
+        String filePath = "D:/comDownload/";
         File dest = new File(filePath + fileName);
+        System.out.println("dest:"+dest);
         try {
             if (!dest.exists()) {// 判断目录是否存在
                 dest.mkdirs();
@@ -52,8 +57,9 @@ public class UploadController extends AbstractController{
      */
     @GetMapping("/download")
     public String downLoadUrl( HttpServletResponse response) {
-        System.out.printf("url");
-        String filePath = "D:/download/downloadFinal.zip";
+        System.out.printf("--url--");
+        System.out.println(response);
+        String filePath = "D:/comDownload/NodeJS.zip";
         //后台根据download的参数去寻找文件 然后找到文件路径filePath
         File file = new File(filePath);
         if (!file.exists()){

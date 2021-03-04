@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public interface UserService {
     void insertUserLogin(String userName, String passWd,String role,Integer college);
 
-    void updateUserpassWd(String userName, String passWd);
+    void updateUserPassWd(String userName, String passWd);
 
     UserLogin queryByUserName(String userName);//通过账号获取用户信息
 
